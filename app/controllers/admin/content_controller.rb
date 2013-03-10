@@ -27,6 +27,10 @@ class Admin::ContentController < Admin::BaseController
     new_or_edit
   end
 
+  def new2
+    new_or_edit
+  end
+
   def edit
     @article = Article.find(params[:id])
     unless @article.access_by? current_user
@@ -50,6 +54,15 @@ class Admin::ContentController < Admin::BaseController
     @record.destroy
     flash[:notice] = _("This article was deleted successfully")
     redirect_to :action => 'index'
+  end
+
+  def merge
+    @article = Article.find(params[:id])
+    other_article_id = params[:merge_with]
+    message = @article.merge_with(other_article_id)
+    flash[:notice] = message
+    #redirect_to :action => "edit", :id => params[:id]
+    redirect_to :action => "index"
   end
 
   def insert_editor
@@ -240,4 +253,5 @@ class Admin::ContentController < Admin::BaseController
   def setup_resources
     @resources = Resource.by_created_at
   end
+
 end

@@ -416,6 +416,24 @@ class Article < Content
     user.admin? || user_id == user.id
   end
 
+  def merge_with(other_article_id)
+    other_article = Article.find(other_article_id) rescue nil
+    if other_article
+      if other_article.id == id
+        "Error: Not able to merge Article with itself."
+      else
+        self.body = self.body + other_article.body
+        if save!
+          "Article was successfully merged"
+        else
+          "Error saving merged Article."
+        end
+      end
+    else
+      "Error: Article with ID #{other_article_id} doesn't exist."
+    end
+  end
+
   protected
 
   def set_published_at
@@ -466,4 +484,5 @@ class Article < Content
     to = to - 1 # pull off 1 second so we don't overlap onto the next day
     return from..to
   end
+
 end

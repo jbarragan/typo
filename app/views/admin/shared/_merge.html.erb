@@ -1,0 +1,16 @@
+<% className = form_action.delete(:class) %>
+<%= form_tag(form_action, :id => "#merge_form", :enctype => "multipart/form-data", :class => className) do %>
+  <div class='separator'>
+    <h4>Merge Articles</h4>
+    <div class=''>
+    <label for="merge_article_id"><%= _("Article ID")%></label>
+    <div class='input'>
+      <input class="span2" id="other_article_id" name="merge_with" size="30" type="text">
+    </div>
+    </div>
+    <div>
+      <input id='merge_submit' type="submit" value="<%= _('Merge') %>" name="merge[submit]" />
+    </div>
+  </div>
+
+<% end %>
