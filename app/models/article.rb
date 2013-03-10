@@ -423,6 +423,12 @@ class Article < Content
         "Error: Not able to merge Article with itself."
       else
         self.body = self.body + other_article.body
+        other_article.comments.each do |comment|
+          comment.article = self
+          comment.save
+        end
+        other_article.reload
+        other_article.destroy
         if save!
           "Article was successfully merged"
         else
